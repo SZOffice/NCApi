@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NCApi.Common.Domain;
+using NCApi.Repositories;
+using NCApi.Repositories.Impl;
 using NLog.Extensions.Logging;
 using NLog.Web;
 
@@ -32,6 +35,11 @@ namespace NCApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionSettingList = Configuration.GetSection("ConnectionSettings").Get<ConnectionSetting[]>();
+            services.Configure<ConnectionSettingList>(Options => Options.ConnectionSettings = connectionSettingList);
+
+            services.AddTransient<IABTestingRepository, ContribABTestingRepository>();
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -51,7 +59,7 @@ namespace NCApi
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
