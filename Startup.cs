@@ -38,6 +38,7 @@ namespace NCApi
             var connectionSettingList = Configuration.GetSection("ConnectionSettings").Get<ConnectionSetting[]>();
             services.Configure<ConnectionSettingList>(Options => Options.ConnectionSettings = connectionSettingList);
 
+            //services.AddTransient<IABTestingRepository, ABTestingRepository>();
             services.AddTransient<IABTestingRepository, ContribABTestingRepository>();
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
