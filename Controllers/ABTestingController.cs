@@ -15,18 +15,28 @@ namespace NCApi.Controllers
     {
         private readonly ILogger<ABTestingController> _logger;
         private readonly IABTestingRepository _aBTestingRepository;
+        private readonly IABTestingJDBRepository _aBTestingJDBRepository;
+        private readonly ISqlSugarABTestingRepository _sqlSugarABTestingRepository;
 
-        public ABTestingController(ILogger<ABTestingController> logger, IABTestingRepository aBTestingRepository)
+        public ABTestingController(ILogger<ABTestingController> logger, IABTestingRepository aBTestingRepository, IABTestingJDBRepository aBTestingJDBRepository, ISqlSugarABTestingRepository sqlSugarABTestingRepository)
         {
             _logger = logger;
             _aBTestingRepository = aBTestingRepository;
+            _aBTestingJDBRepository = aBTestingJDBRepository;
+            _sqlSugarABTestingRepository = sqlSugarABTestingRepository;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             var data = await _aBTestingRepository.GetAllAsync();
-            return Ok(data);
+            var dataJDB = await _aBTestingJDBRepository.GetAllAsync();
+            var sugarData = _sqlSugarABTestingRepository.GetAll();
+            var aBTestingPageRequest = new ABTestingPageRequest() {
+                Id = 0
+            };
+            var pageData = _sqlSugarABTestingRepository.GetPageList(aBTestingPageRequest);
+            return Ok(pageData);
         }
 
         [HttpGet("{id}")]

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace NCApi.Common.Services
 {
-    public abstract class DapperDBContext : IContext
+    public abstract class DapperDBContext : IDapperDBContext
     {        
         private IDbTransaction _transaction;
         private int? _commandTimeout = null;

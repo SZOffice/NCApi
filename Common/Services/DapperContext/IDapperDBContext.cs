@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NCApi.Common.Services
 {
-    public interface IContext : IDisposable
+    public interface IDapperDBContext : IDisposable
     {
         IDbConnection Connection { get; }
 

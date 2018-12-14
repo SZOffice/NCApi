@@ -40,6 +40,8 @@ namespace NCApi
 
             //services.AddTransient<IABTestingRepository, ABTestingRepository>();
             services.AddTransient<IABTestingRepository, ContribABTestingRepository>();
+            services.AddTransient<IABTestingJDBRepository, ContribABTestingJDBRepository>();
+            services.AddTransient<ISqlSugarABTestingRepository, SqlSugarABTestingRepository>();
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
