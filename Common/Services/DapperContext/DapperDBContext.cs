@@ -24,11 +24,11 @@ namespace NCApi.Common.Services
 
         protected IDbConnection CreateConnection(ConnectionSetting connectionSetting)
         {
-            var providerName = connectionSetting.ProviderName;
-            if (providerName == "MySql.Data.MySqlClient") {
+            var providerName = connectionSetting.ProviderName.ToLower();
+            if (providerName.Contains("mysqlclient")) {
                 return new MySqlConnection(connectionSetting.ConnectionString);
             }
-            if (providerName == "System.Data.SqlClient") {
+            if (providerName.Contains("sqlclient")) {
                 return new SqlConnection(connectionSetting.ConnectionString);
             }
             
